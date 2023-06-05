@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voltametrie</title>
+    <script src="/Chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+    <div id="receivedDataBox"></div>
+
+    <form id="dataForm">
+        <label for="startPot">Start potential(mV):</label>
+        <input type="number" id="startPot" name="startPot" min="0" max="2500"><br><br>
+
+        <label for="endPot">End potential(mV):</label>
+        <input type="number" id="endPot" name="endPot" min="0" max="2500"><br><br>
+
+        <label for="totalTime">Total time(ms):</label>
+        <input type="number" id="totalTime" name="totalTime" min="1000" ><br><br>
+
+        <label for="frequency">Frequency squarewave(Hz):</label>
+        <input type="number" id="frequency" name="frequency" min="1"><br><br>
+
+        <label for="amplitude"> Amplitude squarewave(mV):</label>
+        <input type="number" id="amplitude" name="amplitude"min="0"max="200"><br><br>
+
+        <input type="button" value="Send Data" onclick="sendData()"><br><br>
+        
+        <input type="button" value="Save Data" onclick="saveData()"><br><br>
+        
+        <input type="button" value="Start Measurement" onclick="startMeasurement()">
+    </form>
+
+    <script>
+        var datasets = []; // Array to store datasets
+
+        var colors = [
+            'rgba(246, 83, 20, 1)',
+            'rgba(124, 187, 0, 1)',
+            'rgba(0, 161, 241, 1)',
+            'rgba(255, 187, 0, 1)',
+        ];
+
+        var data = {
+            datasets: datasets
+        };
+
+        var options = {
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    beginAtZero: true,
+                },
+                y: {
+                    beginAtZero: true,
+                },
+                xAxes:[{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Spanning in mV'
+                    }
+                 }],
+                 yAxes:[{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Stroom in nA'
+                    }
+                 }]
+            }
+        };
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'scatter',
+            data: data,
+            options: options
+        });
+
+        function startMeasurement() {
+            var newDataset = {
+                label: 'Meeting ' + (datasets.length + 1),
+                data: [],
+                backgroundColor: colors[datasets.length % colors.length], // Assign a color from the colors array
+                borderColor: colors[datasets.length % colors.length], // Assign the same color as backgroundColor
+                borderWidth: 1,
+                fill: false,
+                lineTension: 0,
+                showLine: true
+            };
+
+            datasets.push(newDataset); // Add the new dataset to the array
+            myChart.update();
+
+            fetch('/startMeasurement')
+                .then(response => response.text())
+                .then(state => console.log('Start Measurement button state:', state))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function checkForData() {
+            fetch('/getData')
+            .then(response => {
+            if (response.status === 200) {
+                return response.text();
+            } else if (response.status === 204) {
+                throw new Error('No content');
+      } else {
+        // Handle other response codes/errors
+        throw new Error('Error: ' + response.status);
+      }
+    })
+        .then(data => {
+            var values = data.split(",");
+            var currentIndex = datasets.length - 1; // Get the index of the current dataset
+        datasets[currentIndex].data = []; // Clear the data in the current dataset
+        for (let i = 0; i < values.length; i += 2) {
+          const y = parseFloat(values[i + 1]);
+          const x = parseFloat(values[i]);
+          if (x !== 0 && y !== 0 || !isNaN(x) || !isNaN(y)) {
+            datasets[currentIndex].data.push({ x: x, y: y });
+          }
+        }
+        myChart.update();
+    })
+    .catch(error => console.error('Error:', error));
+}
+        function validateForm() {
+            var startPot = document.getElementById("startPot").value;
+            var endPot = document.getElementById("endPot").value;
+            var totalTime = document.getElementById("totalTime").value;
+            var frequency = document.getElementById("frequency").value;
+            var amplitude = document.getElementById("amplitude").value;
+
+            if (
+                startPot < 0 ||
+                startPot > 2500 ||
+                endPot < 0 ||
+                endPot > 2500 ||
+                totalTime < 1000 ||
+                frequency < 1 ||
+                amplitude < 0 ||
+                amplitude > 200
+            ) {
+                alert("Invalid input! Please check the values.");
+                return false;
+            }
+            var stapgroote = (endPot -startPot)/(totalTime/((1/frequency)*1000));
+            if(stapgroote < 1 ){
+                alert("stepsize < 1mV");
+                return false;
+            }
+
+            return true;
+        }
+
+        function sendData() {
+            if (!validateForm()) {
+                return;
+            }
+
+            event.preventDefault(); // Prevent form submission
+            var form = document.getElementById("dataForm");
+            var formData = new URLSearchParams(new FormData(form)).toString();
+            fetch('/sendData?' + formData)
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function saveData() {
+            fetch('/saveData')
+                .then(response => response.text())
+                .then(state => console.log('Save Data button state:', state))
+                .catch(error => console.error('Error:', error));
+        }
+
+        checkForData();
+        setInterval(checkForData, 1000);
+    </script>
+</body>
+</html>
