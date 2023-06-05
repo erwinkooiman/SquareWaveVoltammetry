@@ -1,7 +1,6 @@
 
 
-/* code zet mbv de DAC een spanning over een test weerstand. vervolgens leest de ADC een spanning uit en rekent dit om naar een stroom. */
-
+/* code zet mbv de DAC een spanning over een elektrode. vervolgens leest de ADC een spanning uit en rekent dit om naar een stroom. */
 
 //#define DEBUG       // uncommend for debug printouts.
 
@@ -10,8 +9,6 @@
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
 #include <SPIFFS.h>
-#include <math.h>
-
 
 //defines voor DAC
 #define LSB_DAC (5000 / pow(2, 16))
@@ -52,7 +49,7 @@ struct ReceivedData {
 };
 
 
-  struct ReceivedData parameters;
+struct ReceivedData parameters;
 
 bool saveDataButtonState = false;
 bool startMeasurementButtonState = false;
@@ -98,8 +95,6 @@ float measure();
 void IRAM_ATTR Timer0_ISR();
 void timerForInterrupt(uint64_t timeInMs);
 void squareWaveVoltammetry(struct ReceivedData parameters);
-
-void printStruct();
 
 const int dataSize = 1000;
 IV data[dataSize];
@@ -273,7 +268,6 @@ void loop(void) {
   }
 
    if (rampPot >= endPot && done == false){
-      //printStruct();
       measurementIndex = 0;
       memset(data, '\0', sizeof(data)); 
       done = true;
@@ -318,7 +312,7 @@ void squareWaveVoltammetry(struct ReceivedData parameters) {
   setDacValue(rampPot+amplitude+stepSize+DACOFFSET);
   int temp = ads.readADC_Differential_0_1();
 
-//#ifdef DEBUG
+#ifdef DEBUG
   Serial.print("potDiff ");
   Serial.println(potDiff);
   Serial.print("period ");
@@ -327,7 +321,7 @@ void squareWaveVoltammetry(struct ReceivedData parameters) {
   Serial.println(nstep);
   Serial.print("stepSize ");
   Serial.println(stepSize);
-//#endif
+#endif
 timerForInterrupt((period / 2)*1000);
   return;
 }
@@ -448,20 +442,6 @@ float measure() {
  Serial.print(stroom);
  Serial.println("nA ,");
 #endif
- // Serial.print(data[j].spanning);
- // Serial.print(",");
- // Serial.println(data[j].stroom,4);
+
  return stroom;
-}
-
-void printStruct(){
-   for(int j = 0; j < dataSize; j++)
-   { if (data[j].spanning > 0){
-    yield();
-     Serial.print(data[j].spanning);
-     Serial.print(",");
-     Serial.println(data[j].stroom);
-   }
-
-   }
 }
