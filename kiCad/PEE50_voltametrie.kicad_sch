@@ -2637,7 +2637,7 @@
     (pin "1" (uuid fa0df230-ee24-43f0-9beb-2485b03bbd94))
     (pin "2" (uuid 6c1e9b11-8a46-4d6d-ae71-cd5a417d6c83))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C9") (unit 1)
         )
@@ -2663,7 +2663,7 @@
     (pin "1" (uuid b0f9cb98-0863-4475-81d1-7071b040f8fb))
     (pin "2" (uuid caf1b9cc-f651-4dfd-a67a-9a87edb1baca))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C10") (unit 1)
         )
@@ -2688,7 +2688,7 @@
     )
     (pin "1" (uuid 091dc7e0-6091-4e3e-a654-1d88ee0cf93e))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR015") (unit 1)
         )
@@ -2714,7 +2714,7 @@
     (pin "1" (uuid 8dac2146-2082-456e-ae06-10266952b6d5))
     (pin "2" (uuid 67ca9e56-5336-4226-b342-f4a7701339e7))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C12") (unit 1)
         )
@@ -2740,7 +2740,7 @@
     (pin "1" (uuid ae156b91-be72-4919-9202-ec0deccb5615))
     (pin "2" (uuid 34feca77-a18b-436f-8f30-fdaedcfdef30))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R13") (unit 1)
         )
@@ -2765,7 +2765,7 @@
     )
     (pin "1" (uuid 6ac6df94-af12-42f2-a6c9-2d4671bc6706))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#FLG02") (unit 1)
         )
@@ -2790,7 +2790,7 @@
     )
     (pin "1" (uuid 244714e7-859f-4328-8ba0-2862bb0d6703))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR08") (unit 1)
         )
@@ -2840,7 +2840,7 @@
     (pin "4" (uuid 0b44158f-ce37-4c25-bcb8-a5df86ca4d24))
     (pin "5" (uuid fd53e9a6-faad-4fa3-a95f-139996c141f6))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "IC2") (unit 1)
         )
@@ -2888,7 +2888,7 @@
     (pin "2" (uuid c244b62d-551e-42b9-8ac9-f386441671c5))
     (pin "3" (uuid 4cb81b7e-e647-4653-96ec-289122a06ca5))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "IC8") (unit 1)
         )
@@ -2965,7 +2965,7 @@
     (pin "J3-8" (uuid d3e020c3-0cc7-4574-94cb-d78cebdf162d))
     (pin "J3-9" (uuid 2c6d7ad5-7dc8-4fe9-a4ea-e306fa3aabdb))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "U1") (unit 1)
         )
@@ -2990,7 +2990,7 @@
     )
     (pin "1" (uuid e340aa8d-4c13-46ea-ba1b-b459d225b6c4))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR016") (unit 1)
         )
@@ -3017,7 +3017,7 @@
     (pin "2" (uuid fb46af43-d93f-4916-91ac-d2293cd47b9d))
     (pin "3" (uuid 8a1eebff-1b16-4704-a2b6-f8d072e474fc))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "JP1") (unit 1)
         )
@@ -3042,7 +3042,7 @@
     )
     (pin "1" (uuid 12eb714e-31ea-49e1-8246-1e7644863bf4))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#FLG01") (unit 1)
         )
@@ -3068,7 +3068,7 @@
     (pin "1" (uuid dedab57c-3d51-4817-b556-e5c44c7fe4c8))
     (pin "2" (uuid 1e7493db-a4ec-4db5-b3c3-7275d2785c4c))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R8") (unit 1)
         )
@@ -3094,7 +3094,7 @@
     (pin "1" (uuid 3b95703b-cc24-484d-b325-711af65a2120))
     (pin "2" (uuid e9861303-5048-400f-883e-423cf9757368))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C1") (unit 1)
         )
@@ -3119,7 +3119,7 @@
     )
     (pin "1" (uuid ddc01b72-b48f-428d-8feb-442bc157694a))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "TP1") (unit 1)
         )
@@ -3144,7 +3144,7 @@
     )
     (pin "1" (uuid 5712cacf-2893-42b5-a034-ffa9fce7023e))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR06") (unit 1)
         )
@@ -3170,7 +3170,7 @@
     (pin "1" (uuid d6f1c97b-c743-42ef-88d6-1537bbca4794))
     (pin "2" (uuid d7bf2d83-4de0-4154-a177-0d09dd3a1f62))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R11") (unit 1)
         )
@@ -3187,7 +3187,7 @@
     (property "Value" "Conn_02x03_Odd_Even" (at 68.326 161.29 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical" (at 67.056 167.64 0)
+    (property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Horizontal" (at 67.056 167.64 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (at 67.056 167.64 0)
@@ -3200,7 +3200,7 @@
     (pin "5" (uuid 0373e6b4-4a48-43b7-ad35-cd4f6877eb3e))
     (pin "6" (uuid 2bf3f068-433c-48b9-9043-ba4d4e184f28))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "J4") (unit 1)
         )
@@ -3226,7 +3226,7 @@
     (pin "1" (uuid dbae57b1-55f6-48dc-a6e9-f2ec17149571))
     (pin "2" (uuid 798d556b-7329-497c-9517-c258549af223))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R10") (unit 1)
         )
@@ -3279,7 +3279,7 @@
     (pin "4" (uuid 35af87e5-6158-436d-a505-94b532c7f13a))
     (pin "5" (uuid c72fdcaa-164e-414a-8f86-26d776185766))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "IC1") (unit 1)
         )
@@ -3304,7 +3304,7 @@
     )
     (pin "1" (uuid 5d708f0f-79d0-48e7-b25e-40a9f55a7026))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR023") (unit 1)
         )
@@ -3330,7 +3330,7 @@
     (pin "1" (uuid 7ba261fa-efa9-4a15-88f7-bb5e986b5cb8))
     (pin "2" (uuid 57d227f7-e2c2-4f4c-9aba-05a603820aa3))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R5") (unit 1)
         )
@@ -3355,7 +3355,7 @@
     )
     (pin "1" (uuid 4c31a00c-4ae1-46aa-8c5f-d078f6642278))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "TP5") (unit 1)
         )
@@ -3380,7 +3380,7 @@
     )
     (pin "1" (uuid 08bfce0e-6e89-43a3-a877-5b5cf20a95b8))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR07") (unit 1)
         )
@@ -3405,7 +3405,7 @@
     )
     (pin "1" (uuid 797cb7b3-e42e-45d1-967b-d44c07fcce7d))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR012") (unit 1)
         )
@@ -3431,7 +3431,7 @@
     (pin "1" (uuid 50bd50e7-821c-4b3a-88aa-bb962f9ac882))
     (pin "2" (uuid dd1dec95-3ebc-4c7b-b262-b851e2595e10))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R2") (unit 1)
         )
@@ -3457,7 +3457,7 @@
     (pin "1" (uuid c20baf8b-c598-4ae5-a7b0-10a6baf22ff6))
     (pin "2" (uuid 5ae4b511-ca04-4ec1-b03d-bf4aacaae9b8))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C11") (unit 1)
         )
@@ -3482,7 +3482,7 @@
     )
     (pin "1" (uuid 484b8812-18bc-42f4-9a67-3b90a5ee64ec))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR020") (unit 1)
         )
@@ -3508,7 +3508,7 @@
     (pin "1" (uuid 6e2114e6-a1ab-4f0c-94ea-e3e949d16490))
     (pin "2" (uuid 8be50ef9-a2c2-459d-ab7b-8eb0a906e24a))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C15") (unit 1)
         )
@@ -3534,7 +3534,7 @@
     (pin "1" (uuid 5e665f5a-960a-4768-bfd8-7fc045548ad6))
     (pin "2" (uuid 0b9678b5-b159-4b07-bc89-fbbf95f5f936))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R12") (unit 1)
         )
@@ -3559,7 +3559,7 @@
     )
     (pin "1" (uuid a01d4f23-9aa8-46c3-ae9b-35287948bb53))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR022") (unit 1)
         )
@@ -3584,7 +3584,7 @@
     )
     (pin "1" (uuid fb326e19-6a61-4de2-9c1f-7cfe754dd9e7))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR021") (unit 1)
         )
@@ -3610,7 +3610,7 @@
     (pin "1" (uuid a547ffb0-ab9b-4b98-8850-d037e9cfeb90))
     (pin "2" (uuid f61ae7f1-a39c-440d-8c12-ce345132b29b))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C14") (unit 1)
         )
@@ -3640,7 +3640,7 @@
     (pin "5" (uuid 7b693879-a715-40d6-8502-aa0169460320))
     (pin "6" (uuid 63688046-1c41-4ce2-bc4d-c9f702433e85))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "J2") (unit 1)
         )
@@ -3666,7 +3666,7 @@
     (pin "1" (uuid 8b40433e-cc5e-40b3-a637-4a77e4b68091))
     (pin "2" (uuid dfcc0767-7f05-4d14-a968-7e09ca3905d5))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R4") (unit 1)
         )
@@ -3692,7 +3692,7 @@
     (pin "1" (uuid d4bf3d8e-14b9-4b7e-a211-812e35002e42))
     (pin "2" (uuid 939ac3df-3a36-40da-9606-8d5db605e879))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R1") (unit 1)
         )
@@ -3717,7 +3717,7 @@
     )
     (pin "1" (uuid f377d8f2-3994-496b-a345-2fcadc032412))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR01") (unit 1)
         )
@@ -3742,7 +3742,7 @@
     )
     (pin "1" (uuid 5fac4323-ee5b-430f-9bb0-f253a3ec9b8a))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR014") (unit 1)
         )
@@ -3768,7 +3768,7 @@
     (pin "1" (uuid e1e15ac3-dd64-4dc9-b7cd-353674969866))
     (pin "2" (uuid 2e2376df-7322-4a15-84ce-a0021f3cb9b1))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R15") (unit 1)
         )
@@ -3793,7 +3793,7 @@
     )
     (pin "1" (uuid a5061205-f058-4550-bb31-61dddf608e65))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR013") (unit 1)
         )
@@ -3818,7 +3818,7 @@
     )
     (pin "1" (uuid d2c360f0-e522-42b0-b5b6-e1688269c9b3))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR03") (unit 1)
         )
@@ -3844,7 +3844,7 @@
     (pin "1" (uuid a964d3f5-2f6c-44e6-a829-039c20b3be5d))
     (pin "2" (uuid fb3dbecd-61bb-4cf0-bf38-ac843858c795))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R7") (unit 1)
         )
@@ -3870,7 +3870,7 @@
     (pin "1" (uuid edb21d36-1481-46e3-8de3-6217ae6e648d))
     (pin "2" (uuid e8f2d8e1-3f49-4959-82fc-1047b8924a84))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C16") (unit 1)
         )
@@ -3896,7 +3896,7 @@
     (pin "1" (uuid 74f6f1f7-1db7-4342-9cdc-064463d51d92))
     (pin "2" (uuid 0679e347-3ba3-4626-ac90-651e77565151))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C7") (unit 1)
         )
@@ -3921,7 +3921,7 @@
     )
     (pin "1" (uuid 7e2b989e-8cad-4cdc-b4ef-a36eae148cb1))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR05") (unit 1)
         )
@@ -3946,7 +3946,7 @@
     )
     (pin "1" (uuid 6095ffd5-ee24-4e97-808e-6500dc2b03aa))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR011") (unit 1)
         )
@@ -3971,7 +3971,7 @@
     )
     (pin "1" (uuid 4d1c49f4-95fb-453b-8886-c58806b55dbe))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "H3") (unit 1)
         )
@@ -3997,7 +3997,7 @@
     (pin "1" (uuid ff09347d-fca9-46c4-8782-2567dd64a7fc))
     (pin "2" (uuid 9cbf7d18-c098-4922-9d7d-daa871462e24))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C4") (unit 1)
         )
@@ -4023,7 +4023,7 @@
     (pin "1" (uuid 0e8e582b-8561-4907-bea8-ecd86e7531b5))
     (pin "2" (uuid 2b7bca6f-21d9-4823-99bd-c6678d6d6853))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R16") (unit 1)
         )
@@ -4048,7 +4048,7 @@
     )
     (pin "1" (uuid 8ebfc4c9-8b0c-4f25-b96e-850392b26e17))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR025") (unit 1)
         )
@@ -4073,7 +4073,7 @@
     )
     (pin "1" (uuid bf31f64c-b110-4c10-aa8f-3af92e08857d))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR04") (unit 1)
         )
@@ -4098,7 +4098,7 @@
     )
     (pin "1" (uuid 35d21dbc-c5ee-40b1-b557-790d44642e87))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR010") (unit 1)
         )
@@ -4124,7 +4124,7 @@
     (pin "1" (uuid 755252ad-02d4-4b01-8d31-1b6f37eed07e))
     (pin "2" (uuid c08cca98-6111-4c97-bdaf-e5c4f036a370))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R14") (unit 1)
         )
@@ -4185,7 +4185,7 @@
     (pin "8" (uuid aa14f453-fc79-476e-877d-90aa10772f9c))
     (pin "9" (uuid eabed4b4-be52-4bfe-98ad-e9879a7034f6))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "J1") (unit 1)
         )
@@ -4210,7 +4210,7 @@
     )
     (pin "1" (uuid 55946272-dc3d-4554-941b-fd8257dbe7d1))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR017") (unit 1)
         )
@@ -4236,7 +4236,7 @@
     (pin "1" (uuid 7c9fb5ad-8a77-4778-b49f-5852c35e1d3e))
     (pin "2" (uuid 0f3cad9c-2f13-4eb4-8ace-03a028b35c9f))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R6") (unit 1)
         )
@@ -4262,7 +4262,7 @@
     (pin "1" (uuid 12ff459e-f5b9-479b-bd66-41a6b66fe798))
     (pin "2" (uuid 1335f2bc-0e25-45e7-9821-35d0daa0ab47))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C5") (unit 1)
         )
@@ -4317,7 +4317,7 @@
     (pin "8" (uuid dc07759c-3e1d-45a4-8ca1-c3a9181974db))
     (pin "9" (uuid f7883990-dd53-4588-a36a-bf4991b11395))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "IC6") (unit 1)
         )
@@ -4343,7 +4343,7 @@
     (pin "1" (uuid 6d604d79-37cd-4857-8bd7-c91619d1f962))
     (pin "2" (uuid a72554e4-1d33-4d2a-8eb5-01eb82aa840c))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C2") (unit 1)
         )
@@ -4368,7 +4368,7 @@
     )
     (pin "1" (uuid d5bb657e-0192-4f2e-bf75-b3305c492567))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR09") (unit 1)
         )
@@ -4394,7 +4394,7 @@
     (pin "1" (uuid 44cd8304-314a-4540-9ae6-504b8a04c937))
     (pin "2" (uuid a08df794-f242-4751-abee-4bf7e847abca))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C3") (unit 1)
         )
@@ -4419,7 +4419,7 @@
     )
     (pin "1" (uuid 0dbc7de1-329e-4d77-ad43-1152851ce713))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR024") (unit 1)
         )
@@ -4475,7 +4475,7 @@
     (pin "7" (uuid 18226b42-96b5-4a43-8aa5-cc4d68e43150))
     (pin "8" (uuid 30852bd2-3aef-4094-99c8-2a8fc116fc86))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "IC7") (unit 1)
         )
@@ -4500,7 +4500,7 @@
     )
     (pin "1" (uuid 4c48a782-5645-438a-be58-bd17ef5e4e69))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "TP3") (unit 1)
         )
@@ -4525,7 +4525,7 @@
     )
     (pin "1" (uuid 2cf3b8c5-8377-4ff8-8b2a-024a09192843))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR019") (unit 1)
         )
@@ -4551,7 +4551,7 @@
     (pin "1" (uuid 836f5dc4-7acb-42b0-b9de-0b4a5d0a318e))
     (pin "2" (uuid 1dadf3d1-dbeb-4445-819e-c7eec6195d96))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C8") (unit 1)
         )
@@ -4576,7 +4576,7 @@
     )
     (pin "1" (uuid 86a225b0-b0eb-4eef-8260-0e2c537d70b1))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "H4") (unit 1)
         )
@@ -4602,7 +4602,7 @@
     (pin "1" (uuid 4310c960-63cb-4698-956d-54a2aa9b9d97))
     (pin "2" (uuid bda12409-bcb0-495c-9b04-1fee012ef31b))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R3") (unit 1)
         )
@@ -4628,7 +4628,7 @@
     (pin "1" (uuid 26801e62-abbc-4cba-a5db-f4fa3d07a46b))
     (pin "2" (uuid d1a36379-9afa-40c6-80e0-53a9d90378a1))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "C13") (unit 1)
         )
@@ -4654,7 +4654,7 @@
     (pin "1" (uuid 33c71fb6-a8dd-4192-9c97-46ad0795cc3d))
     (pin "2" (uuid aa46d848-5a00-4ef8-a2f8-f2f03370d728))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "R9") (unit 1)
         )
@@ -4679,7 +4679,7 @@
     )
     (pin "1" (uuid 941817c0-311c-4b26-97f7-e3a1604eed00))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "H2") (unit 1)
         )
@@ -4704,7 +4704,7 @@
     )
     (pin "1" (uuid ac5a5bb7-42cf-4ec8-9468-7387983dba7b))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "TP4") (unit 1)
         )
@@ -4759,7 +4759,7 @@
     (pin "8" (uuid 0f6bb861-f4ce-4c9b-b93b-f2ae0b175a31))
     (pin "9" (uuid 4717bf95-94e3-4bd4-88a2-9331c5110740))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "IC5") (unit 1)
         )
@@ -4823,7 +4823,7 @@
     (pin "8" (uuid da82fd2b-b35c-4b93-9f51-d030c01727d8))
     (pin "9" (uuid c77d8b8b-06a3-4220-9e44-07c6943a0b96))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "IC3") (unit 1)
         )
@@ -4848,7 +4848,7 @@
     )
     (pin "1" (uuid 6cdeae59-ccf5-411c-a741-b181ed88af3d))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "TP2") (unit 1)
         )
@@ -4873,7 +4873,7 @@
     )
     (pin "1" (uuid d2547434-b769-42a4-b4cc-e5258df24f3a))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "H1") (unit 1)
         )
@@ -4898,7 +4898,7 @@
     )
     (pin "1" (uuid a2d83faa-68ec-43e9-b106-ce8528bfb1cb))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR02") (unit 1)
         )
@@ -4923,7 +4923,7 @@
     )
     (pin "1" (uuid 43f43cc8-77ee-4408-bd0a-0709aad42296))
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63"
           (reference "#PWR018") (unit 1)
         )
@@ -4942,7 +4942,7 @@
       (effects (font (size 1.27 1.27)) (justify left top))
     )
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63" (page "2"))
       )
     )
@@ -4962,7 +4962,7 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (instances
-      (project "PCB"
+      (project "PEE50_voltametrie"
         (path "/f355e0fc-9958-447e-9a27-8806aab31a63" (page "3"))
       )
     )
