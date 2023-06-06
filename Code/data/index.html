@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Voltametrie</title>
     <script src="/Chart.js"></script>
 </head>
+
 <body>
+    <h1>Squarewave voltametrie</h1>
     <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+    <br>
     <div id="receivedDataBox"></div>
+    <br>
 
     <form id="dataForm">
         <label for="startPot">Start potential(mV):</label>
@@ -16,18 +21,18 @@
         <input type="number" id="endPot" name="endPot" min="0" max="2500"><br><br>
 
         <label for="totalTime">Total time(ms):</label>
-        <input type="number" id="totalTime" name="totalTime" min="1000" ><br><br>
+        <input type="number" id="totalTime" name="totalTime" min="1000"><br><br>
 
         <label for="frequency">Frequency squarewave(Hz):</label>
         <input type="number" id="frequency" name="frequency" min="1"><br><br>
 
         <label for="amplitude"> Amplitude squarewave(mV):</label>
-        <input type="number" id="amplitude" name="amplitude"min="0"max="200"><br><br>
+        <input type="number" id="amplitude" name="amplitude" min="0" max="200"><br><br>
 
         <input type="button" value="Send Data" onclick="sendData()"><br><br>
-        
+
         <input type="button" value="Save Data" onclick="saveData()"><br><br>
-        
+
         <input type="button" value="Start Measurement" onclick="startMeasurement()">
     </form>
 
@@ -55,20 +60,20 @@
                 y: {
                     beginAtZero: true,
                 },
-                xAxes:[{
+                xAxes: [{
                     display: true,
                     scaleLabel: {
                         display: true,
                         labelString: 'Spanning in mV'
                     }
-                 }],
-                 yAxes:[{
+                }],
+                yAxes: [{
                     display: true,
                     scaleLabel: {
                         display: true,
                         labelString: 'Stroom in nA'
                     }
-                 }]
+                }]
             }
         };
 
@@ -102,31 +107,34 @@
 
         function checkForData() {
             fetch('/getData')
-            .then(response => {
-            if (response.status === 200) {
-                return response.text();
-            } else if (response.status === 204) {
-                throw new Error('No content');
-      } else {
-        // Handle other response codes/errors
-        throw new Error('Error: ' + response.status);
-      }
-    })
-        .then(data => {
-            var values = data.split(",");
-            var currentIndex = datasets.length - 1; // Get the index of the current dataset
-        datasets[currentIndex].data = []; // Clear the data in the current dataset
-        for (let i = 0; i < values.length; i += 2) {
-          const y = parseFloat(values[i + 1]);
-          const x = parseFloat(values[i]);
-          if (x !== 0 && y !== 0 || !isNaN(x) || !isNaN(y)) {
-            datasets[currentIndex].data.push({ x: x, y: y });
-          }
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.text();
+                    } else if (response.status === 204) {
+                        throw new Error('No content');
+                    } else {
+                        // Handle other response codes/errors
+                        throw new Error('Error: ' + response.status);
+                    }
+                })
+                .then(data => {
+                    var values = data.split(",");
+                    var currentIndex = datasets.length - 1; // Get the index of the current dataset
+                    datasets[currentIndex].data = []; // Clear the data in the current dataset
+                    for (let i = 0; i < values.length; i += 3) {    // Loop through the values [x,y,temp]
+                        const y = parseFloat(values[i + 1]);
+                        const x = parseFloat(values[i]);
+
+                        if (x !== 0 && y !== 0 || !isNaN(x) || !isNaN(y)) {   // Check if the values are not 0 or NaN
+                            datasets[currentIndex].data.push({ x: x, y: y });   //  Add the new data to the current dataset
+                        }
+                    }
+                    document.getElementById("receivedDataBox").innerHTML = "Temperature: " + values[2] + " &deg;C";
+                    myChart.update();   // Update the chart
+                })
+                //.catch(error => console.error('Error:', error));
+                .catch(error => console.log(error.message));
         }
-        myChart.update();
-    })
-    .catch(error => console.error('Error:', error));
-}
         function validateForm() {
             var startPot = document.getElementById("startPot").value;
             var endPot = document.getElementById("endPot").value;
@@ -147,8 +155,8 @@
                 alert("Invalid input! Please check the values.");
                 return false;
             }
-            var stapgroote = (endPot -startPot)/(totalTime/((1/frequency)*1000));
-            if(stapgroote < 1 ){
+            var stapgroote = (endPot - startPot) / (totalTime / ((1 / frequency) * 1000));
+            if (stapgroote < 1) {
                 alert("stepsize < 1mV");
                 return false;
             }
@@ -181,4 +189,5 @@
         setInterval(checkForData, 1000);
     </script>
 </body>
+
 </html>

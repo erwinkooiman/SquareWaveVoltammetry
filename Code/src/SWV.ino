@@ -1,13 +1,15 @@
 
 /* This code implements Squarewave Voltammetry using the DAC80501 to apply a voltage and the ADS1113 to measure the resulting current. */
 
-#define DEBUG       // Uncomment to enable debug printouts
+//#define DEBUG       // Uncomment to enable debug printouts
 
 #include <Adafruit_ADS1X15.h>
 #include "DAC80501.h"
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
 #include <SPIFFS.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
 
 // defines for DAC
 #define LSB_DAC (5000 / pow(2, 16)) // 5V / 2^16 = 76.3 uV
@@ -48,6 +50,12 @@ struct ReceivedData parameters; // Create struct to hold received data
 bool saveDataButtonState = false;         // State of the save data button
 bool startMeasurementButtonState = false; // State of the start measurement button
 
+// Temperature sensor
+const int oneWireBus = 32;           // GPIO16 where the data pin of DS18B20 is connected to
+OneWire oneWire(oneWireBus);         // Setup a oneWire instance to communicate with any OneWire devices
+DallasTemperature sensors(&oneWire); // Pass our oneWire reference to Dallas Temperature sensor
+float temperatureC = 0;              // Variable to hold temp in Celsius
+
 // Mux pins
 const int enablePin = 12; // enable pin of the mux
 const int A1Pin = 4;      // A1 pin of the mux
@@ -81,6 +89,7 @@ struct IV
 { // struct to hold the measurment data
   int celPotential;
   float measuredCurrent;
+  float temperature;
 };
 
 // function prototypes
@@ -188,7 +197,7 @@ void setup(void)
       { // loop through the data array and add the data to the response
         if (data[i].celPotential != 0 && data[i].measuredCurrent != 0)
         {                                                                                // check if the data is not empty
-          responseData += String(data[i].celPotential) + "," + String(data[i].measuredCurrent) + ","; // add the data to the response
+          responseData += String(data[i].celPotential) + "," + String(data[i].measuredCurrent) + "," + String(data[i].temperature) + ","; // add the data to the response
         }
       }
       request->send(200, "text/plain", responseData); // Send response to client
@@ -212,6 +221,9 @@ void setup(void)
   });
 
   server.begin(); // Start server
+
+  sensors.begin(); // Start temperature sensor
+
 }
 
 void loop(void)
@@ -259,6 +271,7 @@ void loop(void)
 #endif
         data[measurementIndex].celPotential = rampPot;                        // add the data to the array
         data[measurementIndex].measuredCurrent = (currentHigh + currentLow) * 0.5; // add the data to the array
+        data[measurementIndex].temperature = temperatureC;                    // add the data to the array
 #ifdef DEBUG
         Serial.print(" RampPot ");
         Serial.print(data[measurementIndex].celPotential);
@@ -311,6 +324,14 @@ void squareWaveVoltammetry(struct ReceivedData parameters)
   Serial.println("amplitude:");
   Serial.println(parameters.amplitude);
 #endif
+
+  sensors.requestTemperatures(); // Send the command to get temperatures
+  temperatureC = sensors.getTempCByIndex(0);  // Read temperature in Celsius
+
+  #ifdef DEBUG  
+    Serial.print("Temperature: ");
+    Serial.println(temperatureC);
+  #endif
 
   potDiff = parameters.endPot - parameters.startPot;       // calculate the difference between the start and end pot
   period = (1 / parameters.frequency) * 1000;              // calculate the period of the squarewave
