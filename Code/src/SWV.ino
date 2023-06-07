@@ -10,6 +10,8 @@
 #include <SPIFFS.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <SDcard.h>
+#include "SD.h"
 
 // defines for DAC
 #define LSB_DAC (5000 / pow(2, 16)) // 5V / 2^16 = 76.3 uV
@@ -19,6 +21,13 @@
 #define SPI1_MOSI 23                // Master Output Slave Input
 #define SPI1_CS 5                   // Chip-Select
 DAC80501 dac;
+
+// SD module on SPI bus
+#define HSPI_CLK  18
+#define HSPI_MISO 19
+#define HSPI_MOSI 23
+#define HSPI_SS   15
+SPIClass * hspi = NULL;
 
 // defines for ADC
 #define LSB_ADC 62.5E-6                // 2.048V / 2^15 = 62.5 uV
@@ -144,6 +153,27 @@ void setup(void)
   ads.setDataRate(RATE_ADS1115_32SPS);                                       // set ADC datarate
   ads.startADCReading(ADS1X15_REG_CONFIG_MUX_DIFF_0_1, /*continuous=*/true); // start ADC reading
   int test = ads.readADC_Differential_0_1();                                 // read ADC value (dummy read)
+
+    // Initialize HSPI bus
+    hspi = new SPIClass(HSPI);  // allocate new HSPI object
+    hspi->begin(HSPI_CLK, HSPI_MISO, HSPI_MOSI, HSPI_SS); // init HSPI with default pins
+    pinMode(hspi->pinSS(), OUTPUT); // set SS as output
+
+    if(!SD.begin()){
+        Serial.println("Card Mount Failed");
+        return;
+    }
+    uint8_t cardType = SD.cardType();
+
+    if(cardType == CARD_NONE){
+        Serial.println("No SD card attached");
+        return;
+    } 
+    
+    uint64_t cardSize = SD.cardSize() / (1024 * 1024);
+    Serial.printf("SD Card Size: %lluMB\n", cardSize);
+
+    
 
   WiFi.softAP(ssid);               // Start the Access Point
   IPAddress IP = WiFi.softAPIP();  // Get the IP address of the Access Point
