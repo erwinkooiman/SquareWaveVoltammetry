@@ -243,11 +243,13 @@
           "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/include",
           "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/src",
           "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/SPIFFS/src",
+
           "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/lib/SDcard",
           "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/SD/src",
           "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/lib/DAC80501",
           "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/.pio/libdeps/esp32dev/DallasTemperature",
           "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/.pio/libdeps/esp32dev/OneWire",
+
           "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/.pio/libdeps/esp32dev/ESPAsyncWebServer-esphome/src",
           "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
           "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/FS/src",

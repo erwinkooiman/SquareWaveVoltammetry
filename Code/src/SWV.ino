@@ -4,7 +4,7 @@
 //#define DEBUG       // Uncomment to enable debug printouts
 
 #include <Adafruit_ADS1X15.h>
-#include "DAC80501.h"
+#include <DAC80501.h>
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
 #include <SPIFFS.h>
