@@ -2,6 +2,8 @@
 /* This code implements Squarewave Voltammetry using the DAC80501 to apply a voltage and the ADS1113 to measure the resulting current. */
 
 //#define DEBUG       // Uncomment to enable debug printouts
+#define PRINTRESULTS // Uncomment to enable printing the results to the serial monitor
+
 
 #include <Adafruit_ADS1X15.h>
 #include <DAC80501.h>
@@ -10,8 +12,8 @@
 #include <SPIFFS.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
-#include <SDcard.h>
-#include "SD.h"
+// #include <SDcard.h>
+// #include "SD.h"
 
 // defines for DAC
 #define LSB_DAC (5000 / pow(2, 16)) // 5V / 2^16 = 76.3 uV
@@ -22,12 +24,12 @@
 #define SPI1_CS 5                   // Chip-Select
 DAC80501 dac;
 
-// SD module on SPI bus
-#define HSPI_CLK  18
-#define HSPI_MISO 19
-#define HSPI_MOSI 23
-#define HSPI_SS   15
-SPIClass * hspi = NULL;
+// // SD module on SPI bus
+// #define HSPI_CLK  18
+// #define HSPI_MISO 19
+// #define HSPI_MOSI 23
+// #define HSPI_SS   15
+// SPIClass * hspi = NULL;
 
 // defines for ADC
 #define LSB_ADC 62.5E-6                // 2.048V / 2^15 = 62.5 uV
@@ -117,8 +119,8 @@ void setup(void)
   // defualt values for the parameters
   parameters.startPot = 0;
   parameters.endPot = 1500;
-  parameters.totalTime = 10000;
-  parameters.frequency = 10;
+  parameters.totalTime = 20000;
+  parameters.frequency = 5;
   parameters.amplitude = 0;
 
   Serial.begin(115200); // Start Serial Monitor
@@ -154,24 +156,24 @@ void setup(void)
   ads.startADCReading(ADS1X15_REG_CONFIG_MUX_DIFF_0_1, /*continuous=*/true); // start ADC reading
   int test = ads.readADC_Differential_0_1();                                 // read ADC value (dummy read)
 
-    // Initialize HSPI bus
-    hspi = new SPIClass(HSPI);  // allocate new HSPI object
-    hspi->begin(HSPI_CLK, HSPI_MISO, HSPI_MOSI, HSPI_SS); // init HSPI with default pins
-    pinMode(hspi->pinSS(), OUTPUT); // set SS as output
+    // // Initialize HSPI bus
+    // hspi = new SPIClass(HSPI);  // allocate new HSPI object
+    // hspi->begin(HSPI_CLK, HSPI_MISO, HSPI_MOSI, HSPI_SS); // init HSPI with default pins
+    // pinMode(hspi->pinSS(), OUTPUT); // set SS as output
 
-    if(!SD.begin()){
-        Serial.println("Card Mount Failed");
-        return;
-    }
-    uint8_t cardType = SD.cardType();
+    // if(!SD.begin()){
+    //     Serial.println("Card Mount Failed");
+    //     return;
+    // }
+    // uint8_t cardType = SD.cardType();
 
-    if(cardType == CARD_NONE){
-        Serial.println("No SD card attached");
-        return;
-    } 
+    // if(cardType == CARD_NONE){
+    //     Serial.println("No SD card attached");
+    //     return;
+    // } 
     
-    uint64_t cardSize = SD.cardSize() / (1024 * 1024);
-    Serial.printf("SD Card Size: %lluMB\n", cardSize);
+    // uint64_t cardSize = SD.cardSize() / (1024 * 1024);
+    // Serial.printf("SD Card Size: %lluMB\n", cardSize);
 
     
 
@@ -239,13 +241,17 @@ void setup(void)
   });
 
   server.on("/saveData", HTTP_GET, [](AsyncWebServerRequest *request) { // Handle requests to saveData path (/saveData)
-    Serial.println("Save data button is pressed");                      // Print to serial monitor
+    #ifdef DEBUG
+    Serial.println("Save data button is pressed");   
+    #endif                   // Print to serial monitor
     saveDataButtonState = !saveDataButtonState;                         // Toggle button state
     request->send(200, "text/plain", String(saveDataButtonState));      // Send response to client
   });
 
   server.on("/startMeasurement", HTTP_GET, [](AsyncWebServerRequest *request) { // Handle requests to startMeasurement path (/startMeasurement)
-    Serial.println("Start Measurement button is pressed");                      // Print to serial monitor
+    #ifdef DEBUG
+      Serial.println("Start Measurement button is pressed"); 
+    #endif                     // Print to serial monitor
     startMeasurementButtonState = true;                                         // toggle button state
     request->send(200, "text/plain", String(startMeasurementButtonState));      // Send response to client
   });
@@ -318,8 +324,16 @@ void loop(void)
     portEXIT_CRITICAL_ISR(&timerMux);  // exit critical section
   }
 
-  if (rampPot >= endPot && measurmentDone == false)
-  {                                   // check if the endpot is reached
+  if (rampPot >= endPot && measurmentDone == false) // check if the endpot is reached
+  {  
+    #ifdef PRINTRESULTS
+      for(int i; i<measurementIndex;i++){
+        Serial.print(data[i].celPotential);
+        Serial.print(",");
+        Serial.println(data[i].measuredCurrent);
+      }                 
+    #endif
+
     measurementIndex = 0;             // reset the index
     memset(data, '\0', sizeof(data)); // reset the array
     measurmentDone = true;                      // set the done flag
@@ -416,7 +430,7 @@ void switchTMUX1109(uint8_t state)
     digitalWrite(A1Pin, 0);     // set the mux pins
     digitalWrite(A0Pin, 0);     // set the mux pins
     resistance = 50E6;           // change resistance for current calculation
-    offset = 0;                 // change offset for current calculation (not used in current version)
+    offset = 0.05;                 // change offset for current calculation (not used in current version)
     break;
   case 2:                       // S2  1.2MOhm gian resistor (833nA/V)
     digitalWrite(enablePin, 1); // enable the mux
@@ -437,7 +451,7 @@ void switchTMUX1109(uint8_t state)
     digitalWrite(A1Pin, 1);     // set the mux pins
     digitalWrite(A0Pin, 1);     // set the mux pins
     resistance = 649;            // change resistance for current calculation
-    offset = -8000;             // change offset for current calculation (not used in current version)
+    offset = 0;             // change offset for current calculation (not used in current version)
     break;
   default:
     digitalWrite(enablePin, 0); // disable the mux
@@ -500,7 +514,7 @@ float measure()
   } while (results < LOWER_LIMIT || results > UPPER_LIMIT); // loop until the ADC value is between the limits
 
   float adcVoltage = (results * LSB_ADC);          // in V
-  float current = ((adcVoltage / resistance) * 1E9); //+ offset;    // in nA
+  float current = ((adcVoltage / resistance) * 1E9) + offset;    // in nA
 
 #ifdef DEBUG
   Serial.print(results);
