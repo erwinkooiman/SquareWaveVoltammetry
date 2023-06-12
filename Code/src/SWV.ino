@@ -56,8 +56,8 @@ struct ReceivedData
 
 struct ReceivedData parameters; // Create struct to hold received data
 
-bool saveDataButtonState = false;         // State of the save data button
 bool startMeasurementButtonState = false; // State of the start measurement button
+bool sdCardPesent = true;               // check if the sd card is present
 
 // Temperature sensor
 const int oneWireBus = 32;           // GPIO16 where the data pin of DS18B20 is connected to
@@ -141,8 +141,10 @@ void setup(void)
   spi.begin(SCK, MISO, MOSI, CS); // initialize SPI for SD card
 
   if (!SD.begin(CS,spi,80000000)) { // initialize SD card
+  #ifdef DEBUG
     Serial.println("Card Mount Failed");  // if SD card fails to initialize, stop program
-    return;
+  #endif
+   sdCardPesent = false;
   }
 
 
@@ -223,11 +225,6 @@ void setup(void)
     }
   });
 
-  server.on("/saveData", HTTP_GET, [](AsyncWebServerRequest *request) { // Handle requests to saveData path (/saveData)
-    Serial.println("Save data button is pressed");                      // Print to serial monitor
-    saveDataButtonState = !saveDataButtonState;                         // Toggle button state
-    request->send(200, "text/plain", String(saveDataButtonState));      // Send response to client
-  });
 
   server.on("/startMeasurement", HTTP_GET, [](AsyncWebServerRequest *request) { // Handle requests to startMeasurement path (/startMeasurement)
     Serial.println("Start Measurement button is pressed");                      // Print to serial monitor
@@ -256,8 +253,6 @@ void loop(void)
     if (rampPot < endPot && measurmentDone == false)
     { // check if the endpot is reached
 
-
-
       if (dir == 1)
       {                                               // check if the direction is positive
         currentHigh = measure();                      // measure the current on the positive puls
@@ -282,9 +277,9 @@ void loop(void)
         Serial.print(" voltageLow ");
         Serial.println(rampPot - amplitude + DACOFFSET);
 #endif
-        data[measurementIndex].celPotential = rampPot;                        // add the data to the array
+        data[measurementIndex].celPotential = rampPot;                             // add the data to the array
         data[measurementIndex].measuredCurrent = (currentHigh + currentLow) * 0.5; // add the data to the array
-        data[measurementIndex].temperature = temperatureC;                    // add the data to the array
+        data[measurementIndex].temperature = temperatureC;                         // add the data to the array
 #ifdef DEBUG
         Serial.print(" RampPot ");
         Serial.print(data[measurementIndex].celPotential);
@@ -301,25 +296,30 @@ void loop(void)
     portEXIT_CRITICAL_ISR(&timerMux);  // exit critical section
   }
 
-if (rampPot >= endPot &&!measurmentDone) {  // Check if the end potential is reached
-  // Check directory and create new file
-  int measurmentFileIndex = 0;
-  char filename[20] = "/measurment.csv";
-  while (SD.exists(filename)) {
-    measurmentFileIndex++;
-    sprintf(filename, "/measurment%d.csv", measurmentFileIndex);
-  }
+  if (rampPot >= endPot && !measurmentDone)// Check if the end potential is reached
+  { 
+    if (sdCardPesent) // Check if the sd card is present
+    { 
+      // Check directory and create new file
+      int measurmentFileIndex = 0;
+      char filename[20] = "/measurment.csv";
+      while (SD.exists(filename))
+      {
+        measurmentFileIndex++;
+        sprintf(filename, "/measurment%d.csv", measurmentFileIndex);
+      }
 
-  // Add the header to the file
-  appendFile(SD, filename, "celPotential,measuredCurrent,temperature\n");
+      // Add the header to the file
+      appendFile(SD, filename, "celPotential,measuredCurrent,temperature\n");
 
-  // Save the data to the sd card
-  char dataString[200];
-  for (int i = 0; i < measurementIndex; i++) {
-    sprintf(dataString, "%d,%d,%d\n", data[i].celPotential, data[i].measuredCurrent, data[i].temperature);
-    appendFile(SD, filename, dataString);
-  }
-
+      // Save the data to the sd card
+      char dataString[200];
+      for (int i = 0; i < measurementIndex; i++)
+      {
+        sprintf(dataString, "%d,%d,%d\n", data[i].celPotential, data[i].measuredCurrent, data[i].temperature);
+        appendFile(SD, filename, dataString);
+      }
+    }
     measurementIndex = 0;             // reset the index
     memset(data, '\0', sizeof(data)); // reset the array
     measurmentDone = true;            // set the done flag
