@@ -243,7 +243,13 @@
           "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/include",
           "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/src",
           "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/SPIFFS/src",
+
+          "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/lib/SDcard",
+          "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/SD/src",
           "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/lib/DAC80501",
+          "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/.pio/libdeps/esp32dev/DallasTemperature",
+          "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/.pio/libdeps/esp32dev/OneWire",
+
           "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/.pio/libdeps/esp32dev/ESPAsyncWebServer-esphome/src",
           "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
           "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/FS/src",
@@ -463,7 +469,6 @@
           "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/NetBIOS/src",
           "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/Preferences/src",
           "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/RainMaker/src",
-          "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/SD/src",
           "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/SD_MMC/src",
           "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/SimpleBLE/src",
           "C:/Users/erwin/.platformio/packages/framework-arduinoespressif32/libraries/Ticker/src",
@@ -503,6 +508,22 @@
         ""
       ],
       "intelliSenseMode": "windows-gcc-x86"
+    },
+    {
+      "name": "platformipo",
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "defines": [
+        "_DEBUG",
+        "UNICODE",
+        "_UNICODE"
+      ],
+      "windowsSdkVersion": "10.0.19041.0",
+      "compilerPath": "cl.exe",
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "windows-msvc-x64"
     }
   ],
   "version": 4
