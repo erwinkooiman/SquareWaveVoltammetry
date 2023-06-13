@@ -2,6 +2,8 @@
 /* This code implements Squarewave Voltammetry using the DAC80501 to apply a voltage and the ADS1113 to measure the resulting current. */
 
 //#define DEBUG       // Uncomment to enable debug printouts
+#define PRINTRESULTS // Uncomment to enable printing the results to the serial monitor
+
 
 #include <Adafruit_ADS1X15.h>
 #include <DAC80501.h>
@@ -24,11 +26,13 @@ SPIClass spi = SPIClass(HSPI);  // HSPI bus for SD card
 // defines for DAC
 #define LSB_DAC (5000 / pow(2, 16)) // 5V / 2^16 = 76.3 uV
 #define DACOFFSET 2049              // the offset of the DAC, this is the voltage that is applied when the DAC is set to 0 (in mV), because the opamp is offset by 2049mV
+
 #define SPI1_SCK  18  // Clock
 #define SPI1_MISO 19  // Master Input Slave Output not used for DAC
 #define SPI1_MOSI 23  // Master Output Slave Input
 #define SPI1_CS   5  // Chip-Select
 DAC80501 dac;       // Create DAC80501 object
+
 
 
 // defines for ADC
@@ -230,10 +234,19 @@ void setup(void)
   });
 
 
+  server.on("/saveData", HTTP_GET, [](AsyncWebServerRequest *request) { // Handle requests to saveData path (/saveData)
+    #ifdef DEBUG
+    Serial.println("Save data button is pressed");   
+    #endif                   // Print to serial monitor
+    saveDataButtonState = !saveDataButtonState;                         // Toggle button state
+    request->send(200, "text/plain", String(saveDataButtonState));      // Send response to client
+  });
+
   server.on("/startMeasurement", HTTP_GET, [](AsyncWebServerRequest *request) { // Handle requests to startMeasurement path (/startMeasurement)
     #ifdef DEBUG
-      Serial.println("Start Measurement button is pressed");                      // Print to serial monitor
-    #endif
+      Serial.println("Start Measurement button is pressed"); 
+    #endif                     // Print to serial monitor
+    
     startMeasurementButtonState = true;                                         // toggle button state
     request->send(200, "text/plain", String(startMeasurementButtonState));      // Send response to client
   });
@@ -302,6 +315,7 @@ void loop(void)
     portEXIT_CRITICAL_ISR(&timerMux);  // exit critical section
   }
 
+
   if (rampPot >= endPot && !measurmentDone)// Check if the end potential is reached
   { 
     if (SD.begin(CS,spi,80000000)) { // initialize SD card
@@ -351,6 +365,7 @@ void loop(void)
         appendFile(SD, filename, dataString);
       }
     }
+
     measurementIndex = 0;             // reset the index
     memset(data, '\0', sizeof(data)); // reset the array
     measurmentDone = true;            // set the done flag
@@ -448,7 +463,9 @@ void switchTMUX1109(uint8_t state)
     digitalWrite(A1Pin, 0);     // set the mux pins
     digitalWrite(A0Pin, 0);     // set the mux pins
     resistance = 50E6;           // change resistance for current calculation
+
     offset = 0.03;                 // change offset for current calculation (not used in current version)
+
     break;
   case 2:                       // S2  1.2MOhm gian resistor (833nA/V)
     digitalWrite(enablePin, 1); // enable the mux

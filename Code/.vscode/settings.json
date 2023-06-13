@@ -288,5 +288,6 @@
   "C_Cpp_Runner.useLeakSanitizer": false,
   "files.associations": {
     "memory": "cpp"
-  }
+  },
+  "cmake.sourceDirectory": "C:/Users/erwin/OneDrive/Documenten/GitHub/SquareWaveVoltammetry/Code/.pio/libdeps/esp32dev/Adafruit BusIO"
 }
