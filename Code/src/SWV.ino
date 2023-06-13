@@ -2,7 +2,7 @@
 /* This code implements Squarewave Voltammetry using the DAC80501 to apply a voltage and the ADS1113 to measure the resulting current. */
 
 //#define DEBUG       // Uncomment to enable debug printouts
-#define PRINTRESULTS // Uncomment to enable printing the results to the serial monitor
+//#define PRINTRESULTS // Uncomment to enable printing the results to the serial monitor
 
 
 #include <Adafruit_ADS1X15.h>
@@ -119,7 +119,7 @@ IV data[dataSize];         // array to hold the data
 void setup(void)
 {
   // defualt values for the parameters
-  parameters.startPot = 0;
+  parameters.startPot = 50;
   parameters.endPot = 1500;
   parameters.totalTime = 20000;
   parameters.frequency = 5;
@@ -233,14 +233,6 @@ void setup(void)
     }
   });
 
-
-  server.on("/saveData", HTTP_GET, [](AsyncWebServerRequest *request) { // Handle requests to saveData path (/saveData)
-    #ifdef DEBUG
-    Serial.println("Save data button is pressed");   
-    #endif                   // Print to serial monitor
-    saveDataButtonState = !saveDataButtonState;                         // Toggle button state
-    request->send(200, "text/plain", String(saveDataButtonState));      // Send response to client
-  });
 
   server.on("/startMeasurement", HTTP_GET, [](AsyncWebServerRequest *request) { // Handle requests to startMeasurement path (/startMeasurement)
     #ifdef DEBUG
