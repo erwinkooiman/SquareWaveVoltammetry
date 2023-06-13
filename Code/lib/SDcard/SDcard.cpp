@@ -67,33 +67,48 @@ void readFile(fs::FS &fs, const char * path){
 }
 
 void writeFile(fs::FS &fs, const char * path, const char * message){
-  Serial.printf("Writing file: %s\n", path);
-
+  #ifdef DEBUG
+    Serial.printf("Writing file: %s\n", path);
+  #endif
   File file = fs.open(path, FILE_WRITE);
   if(!file){
-    Serial.println("Failed to open file for writing");
+    #ifdef DEBUG
+      Serial.println("Failed to open file for writing");
+    #endif
     return;
   }
   if(file.print(message)){
-    Serial.println("File written");
+    #ifdef DEBUG
+      Serial.println("File written");
+      #endif
   } else {
-    Serial.println("Write failed");
+    #ifdef DEBUG
+      Serial.println("Write failed");
+    #endif
   }
   file.close();
 }
 
 void appendFile(fs::FS &fs, const char * path, const char * message){
-  Serial.printf("Appending to file: %s\n", path);
+  #ifdef DEBUG
+    Serial.printf("Appending to file: %s\n", path);
+  #endif
 
   File file = fs.open(path, FILE_APPEND);
   if(!file){
-    Serial.println("Failed to open file for appending");
+    #ifdef DEBUG
+      Serial.println("Failed to open file for appending");
+    #endif    
     return;
   }
   if(file.print(message)){
+    #ifdef DEBUG
       Serial.println("Message appended");
+    #endif
   } else {
-    Serial.println("Append failed");
+    #ifdef DEBUG
+      Serial.println("Append failed");
+    #endif
   }
   file.close();
 }
