@@ -31,8 +31,6 @@
 
         <input type="button" value="Send Data" onclick="sendData()"><br><br>
 
-        <input type="button" value="Save Data" onclick="saveData()"><br><br>
-
         <input type="button" value="Start Measurement" onclick="startMeasurement()">
     </form>
 
@@ -86,7 +84,7 @@
 
         function startMeasurement() {
             var newDataset = {
-                label: 'Meeting ' + (datasets.length + 1),
+                label: 'Meting ' + (datasets.length + 1),
                 data: [],
                 backgroundColor: colors[datasets.length % colors.length], // Assign a color from the colors array
                 borderColor: colors[datasets.length % colors.length], // Assign the same color as backgroundColor
@@ -175,13 +173,6 @@
             fetch('/sendData?' + formData)
                 .then(response => response.text())
                 .then(data => console.log(data))
-                .catch(error => console.error('Error:', error));
-        }
-
-        function saveData() {
-            fetch('/saveData')
-                .then(response => response.text())
-                .then(state => console.log('Save Data button state:', state))
                 .catch(error => console.error('Error:', error));
         }
 

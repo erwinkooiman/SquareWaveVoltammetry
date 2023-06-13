@@ -12,34 +12,36 @@
 #include <SPIFFS.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
-// #include <SDcard.h>
-// #include "SD.h"
+#include <SDcard.h>
+#include "SD.h"
+
+// defines for SD card 
+#define SCK  14   // Clock
+#define MISO  12  // Master Input Slave Output 
+#define MOSI  13  // Master Output Slave Input 
+#define CS  15      // Chip-Select
+SPIClass spi = SPIClass(HSPI);  // HSPI bus for SD card
+
 
 // defines for DAC
 #define LSB_DAC (5000 / pow(2, 16)) // 5V / 2^16 = 76.3 uV
 #define DACOFFSET 2049              // the offset of the DAC, this is the voltage that is applied when the DAC is set to 0 (in mV), because the opamp is offset by 2049mV
-#define SPI1_SCK 18                 // Clock
-#define SPI1_MISO 19                // fuer dac nur dummy def
-#define SPI1_MOSI 23                // Master Output Slave Input
-#define SPI1_CS 5                   // Chip-Select
-DAC80501 dac;
 
-// // SD module on SPI bus
-// #define HSPI_CLK  18
-// #define HSPI_MISO 19
-// #define HSPI_MOSI 23
-// #define HSPI_SS   15
-// SPIClass * hspi = NULL;
+#define SPI1_SCK  18  // Clock
+#define SPI1_MISO 19  // Master Input Slave Output not used for DAC
+#define SPI1_MOSI 23  // Master Output Slave Input
+#define SPI1_CS   5  // Chip-Select
+DAC80501 dac;       // Create DAC80501 object
+
+
 
 // defines for ADC
 #define LSB_ADC 62.5E-6                // 2.048V / 2^15 = 62.5 uV
 #define UPPER_LIMIT (pow(2, 15) - 600) // 2^15 -700 = 32768 - 700 = 32068 is the value the mux switches to the next resistance
 #define LOWER_LIMIT 680                // is the value the mux switches to the next resistance
-Adafruit_ADS1115 ads;
+Adafruit_ADS1115 ads;                  // Create ADS1115 object
 
-#ifdef DEBUG
-#define LED 21
-#endif
+
 
 // global variables
 const char *ssid = "ACCESPOINT"; // SSID of the Access Point
@@ -58,8 +60,8 @@ struct ReceivedData
 
 struct ReceivedData parameters; // Create struct to hold received data
 
-bool saveDataButtonState = false;         // State of the save data button
 bool startMeasurementButtonState = false; // State of the start measurement button
+bool sdCardPesent = true;               // check if the sd card is present
 
 // Temperature sensor
 const int oneWireBus = 32;           // GPIO16 where the data pin of DS18B20 is connected to
@@ -68,7 +70,7 @@ DallasTemperature sensors(&oneWire); // Pass our oneWire reference to Dallas Tem
 float temperatureC = 0;              // Variable to hold temp in Celsius
 
 // Mux pins
-const int enablePin = 12; // enable pin of the mux
+const int enablePin = 17; // enable pin of the mux
 const int A1Pin = 4;      // A1 pin of the mux
 const int A0Pin = 16;     // A0 pin of the mux
 
@@ -129,19 +131,30 @@ void setup(void)
   pinMode(A1Pin, OUTPUT);
   pinMode(A0Pin, OUTPUT);
 
-#ifdef DEBUG
-  pinMode(LED, OUTPUT);
-#endif
 
   Timer0_Cfg = timerBegin(0, 80, true);                // begin timer
   timerAttachInterrupt(Timer0_Cfg, &Timer0_ISR, true); // attach interrupt
   timerAlarmWrite(Timer0_Cfg, 1000000, true);          // set timer to 1 second
   timerAlarmEnable(Timer0_Cfg);                        // enable timer
 
-  dac.begin(&SPI, SPI1_SCK, SPI1_MISO, SPI1_MOSI, SPI1_CS); // initialize DAC
-  dac.setREG4_DivGain(SET4_DIV1, SET4_GAIN2);               // set DAC gain and divider
-  setDacValue(DACOFFSET + 100);                             // set DAC value to 100mV above the offset
-  delay(100);                                               // wait for the opamp to settle
+  dac.begin(&SPI,SPI1_SCK,SPI1_MISO,SPI1_MOSI,SPI1_CS); // initialize DAC
+  dac.setREG4_DivGain(SET4_DIV1,SET4_GAIN2);            // set DAC gain and divider
+  // setDacValue(DACOFFSET + 100);                             // set DAC value to 100mV above the offset
+  // delay(100);                                               // wait for the opamp to settle
+
+  spi.begin(SCK, MISO, MOSI, CS); // initialize SPI for SD card
+
+  if (!SD.begin(CS,spi,80000000)) { // initialize SD card
+  #ifdef DEBUG
+    Serial.println("Card Mount Failed");  // if SD card fails to initialize, stop program
+  #endif
+   sdCardPesent = false;
+  }
+  #ifdef DEBUG
+    Serial.print("SD car present: "); // if SD card initializes, print message
+    Serial.println(sdCardPesent);     // if SD card initializes, print message
+  #endif
+
 
   switchTMUX1109(currentState); // set the mux to the default state
 
@@ -152,30 +165,10 @@ void setup(void)
       ;
   }
 
-  ads.setDataRate(RATE_ADS1115_32SPS);                                       // set ADC datarate
+  ads.setDataRate(RATE_ADS1115_64SPS);                                       // set ADC datarate
   ads.startADCReading(ADS1X15_REG_CONFIG_MUX_DIFF_0_1, /*continuous=*/true); // start ADC reading
   int test = ads.readADC_Differential_0_1();                                 // read ADC value (dummy read)
 
-    // // Initialize HSPI bus
-    // hspi = new SPIClass(HSPI);  // allocate new HSPI object
-    // hspi->begin(HSPI_CLK, HSPI_MISO, HSPI_MOSI, HSPI_SS); // init HSPI with default pins
-    // pinMode(hspi->pinSS(), OUTPUT); // set SS as output
-
-    // if(!SD.begin()){
-    //     Serial.println("Card Mount Failed");
-    //     return;
-    // }
-    // uint8_t cardType = SD.cardType();
-
-    // if(cardType == CARD_NONE){
-    //     Serial.println("No SD card attached");
-    //     return;
-    // } 
-    
-    // uint64_t cardSize = SD.cardSize() / (1024 * 1024);
-    // Serial.printf("SD Card Size: %lluMB\n", cardSize);
-
-    
 
   WiFi.softAP(ssid);               // Start the Access Point
   IPAddress IP = WiFi.softAPIP();  // Get the IP address of the Access Point
@@ -240,6 +233,7 @@ void setup(void)
     }
   });
 
+
   server.on("/saveData", HTTP_GET, [](AsyncWebServerRequest *request) { // Handle requests to saveData path (/saveData)
     #ifdef DEBUG
     Serial.println("Save data button is pressed");   
@@ -252,6 +246,7 @@ void setup(void)
     #ifdef DEBUG
       Serial.println("Start Measurement button is pressed"); 
     #endif                     // Print to serial monitor
+    
     startMeasurementButtonState = true;                                         // toggle button state
     request->send(200, "text/plain", String(startMeasurementButtonState));      // Send response to client
   });
@@ -277,10 +272,6 @@ void loop(void)
     if (rampPot < endPot && measurmentDone == false)
     { // check if the endpot is reached
 
-#ifdef DEBUG
-      digitalWrite(LED, !digitalRead(LED));
-#endif
-
       if (dir == 1)
       {                                               // check if the direction is positive
         currentHigh = measure();                      // measure the current on the positive puls
@@ -305,9 +296,9 @@ void loop(void)
         Serial.print(" voltageLow ");
         Serial.println(rampPot - amplitude + DACOFFSET);
 #endif
-        data[measurementIndex].celPotential = rampPot;                        // add the data to the array
+        data[measurementIndex].celPotential = rampPot;                             // add the data to the array
         data[measurementIndex].measuredCurrent = (currentHigh + currentLow) * 0.5; // add the data to the array
-        data[measurementIndex].temperature = temperatureC;                    // add the data to the array
+        data[measurementIndex].temperature = temperatureC;                         // add the data to the array
 #ifdef DEBUG
         Serial.print(" RampPot ");
         Serial.print(data[measurementIndex].celPotential);
@@ -324,19 +315,61 @@ void loop(void)
     portEXIT_CRITICAL_ISR(&timerMux);  // exit critical section
   }
 
-  if (rampPot >= endPot && measurmentDone == false) // check if the endpot is reached
-  {  
-    #ifdef PRINTRESULTS
-      for(int i; i<measurementIndex;i++){
-        Serial.print(data[i].celPotential);
-        Serial.print(",");
-        Serial.println(data[i].measuredCurrent);
-      }                 
-    #endif
+
+  if (rampPot >= endPot && !measurmentDone)// Check if the end potential is reached
+  { 
+    if (SD.begin(CS,spi,80000000)) { // initialize SD card
+  #ifdef DEBUG
+    Serial.println("Card Mount succesful");  // if SD card fails to initialize, stop program
+  #endif
+   sdCardPesent = true;
+  }else{
+    sdCardPesent = false; 
+  }
+    
+    if (sdCardPesent) // Check if the sd card is present
+    { 
+      // Check directory and create new file
+      int measurmentFileIndex = 1;
+      char filename[20] = "/measurment.csv";
+      #ifdef DEBUG
+        Serial.println("Saving data to sd card");
+      #endif
+      while (SD.exists(filename)) 
+      {
+        measurmentFileIndex++;
+        sprintf(filename, "/measurment_%d.csv", measurmentFileIndex);
+      }
+      #ifdef DEBUG
+        Serial.print("Filename: ");
+        Serial.println(filename);
+      #endif
+
+      writeFile(SD, filename, "");  // create the file
+      appendFile(SD, filename, "celPotential;measuredCurrent;temperature\n");  // add the header to the file
+
+      // Save the data to the sd card
+      char dataString[200];
+      for (int i = 1; i < measurementIndex; i++)
+      {
+
+        sprintf(dataString, "%d;%f;%f\n", data[i].celPotential, data[i].measuredCurrent, data[i].temperature);
+        //convert point to comma
+        for (int i = 0; i < strlen(dataString); i++)
+        {
+          if (dataString[i] == '.')
+          {
+            dataString[i] = ',';
+          }
+        }
+        appendFile(SD, filename, dataString);
+      }
+    }
 
     measurementIndex = 0;             // reset the index
     memset(data, '\0', sizeof(data)); // reset the array
-    measurmentDone = true;                      // set the done flag
+    measurmentDone = true;            // set the done flag
+    SD.end();                         // stop the sd card
   }
 }
 
@@ -430,7 +463,9 @@ void switchTMUX1109(uint8_t state)
     digitalWrite(A1Pin, 0);     // set the mux pins
     digitalWrite(A0Pin, 0);     // set the mux pins
     resistance = 50E6;           // change resistance for current calculation
-    offset = 0.05;                 // change offset for current calculation (not used in current version)
+
+    offset = 0.03;                 // change offset for current calculation (not used in current version)
+
     break;
   case 2:                       // S2  1.2MOhm gian resistor (833nA/V)
     digitalWrite(enablePin, 1); // enable the mux
@@ -461,8 +496,8 @@ void switchTMUX1109(uint8_t state)
   }
 }
 
-float measure()
-{ // function to measure the current
+float measure() // function to measure the current
+{ 
   do
   {
     results = ads.readADC_Differential_0_1() * -1; // read the ADC value
