@@ -119,7 +119,7 @@ IV data[dataSize];         // array to hold the data
 void setup(void)
 {
   // defualt values for the parameters
-  parameters.startPot = 50;
+  parameters.startPot = 25;
   parameters.endPot = 1500;
   parameters.totalTime = 20000;
   parameters.frequency = 5;
