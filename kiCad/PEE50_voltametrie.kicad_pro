@@ -441,7 +441,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "PEE50_voltametrie.dsn",
-      "step": "",
+      "step": "PEE50_voltametrie.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
