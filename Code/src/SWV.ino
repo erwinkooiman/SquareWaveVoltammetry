@@ -112,6 +112,7 @@ float measure();                                            // function to measu
 void IRAM_ATTR Timer0_ISR();                                // timer interrupt
 void timerForInterrupt(uint64_t timeInMs);                  // function to set the timer interrupt
 void squareWaveVoltammetry(struct ReceivedData parameters); // function to start the swv measurement
+bool writeDataToSD(struct IV data[], int dataSize);              // function to write the data to the sd card
 
 const int dataSize = 1000; // size of the data array
 IV data[dataSize];         // array to hold the data
@@ -249,8 +250,10 @@ void setup(void)
 
 }
 
-void loop(void)
+void loop(void) 
 {
+
+
   yield(); // Yield to allow ESPAsyncWebServer to handle requests
   if (startMeasurementButtonState == true)
   {                                      // check if the start measurement button is pressed
@@ -310,58 +313,10 @@ void loop(void)
 
   if (rampPot >= endPot && !measurmentDone)// Check if the end potential is reached
   { 
-    if (SD.begin(CS,spi,80000000)) { // initialize SD card
-  #ifdef DEBUG
-    Serial.println("Card Mount succesful");  // if SD card fails to initialize, stop program
-  #endif
-   sdCardPesent = true;
-  }else{
-    sdCardPesent = false; 
-  }
-    
-    if (sdCardPesent) // Check if the sd card is present
-    { 
-      // Check directory and create new file
-      int measurmentFileIndex = 1;
-      char filename[20] = "/measurment.csv";
-      #ifdef DEBUG
-        Serial.println("Saving data to sd card");
-      #endif
-      while (SD.exists(filename)) 
-      {
-        measurmentFileIndex++;
-        sprintf(filename, "/measurment_%d.csv", measurmentFileIndex);
-      }
-      #ifdef DEBUG
-        Serial.print("Filename: ");
-        Serial.println(filename);
-      #endif
-
-      writeFile(SD, filename, "");  // create the file
-      appendFile(SD, filename, "celPotential;measuredCurrent;temperature\n");  // add the header to the file
-
-      // Save the data to the sd card
-      char dataString[200];
-      for (int i = 1; i < measurementIndex; i++)
-      {
-
-        sprintf(dataString, "%d;%f;%f\n", data[i].celPotential, data[i].measuredCurrent, data[i].temperature);
-        //convert point to comma
-        for (int i = 0; i < strlen(dataString); i++)
-        {
-          if (dataString[i] == '.')
-          {
-            dataString[i] = ',';
-          }
-        }
-        appendFile(SD, filename, dataString);
-      }
-    }
-
+    writeDataToSD(data, dataSize);                  // write the data to the sd card
     measurementIndex = 0;             // reset the index
     memset(data, '\0', sizeof(data)); // reset the array
     measurmentDone = true;            // set the done flag
-    SD.end();                         // stop the sd card
   }
 }
 
@@ -554,3 +509,37 @@ float measure() // function to measure the current
 
   return current; // return the current
 }
+
+bool writeDataToSD(struct IV data[], int dataSize) {
+  if (!SD.begin(CS, spi, 80000000)) {
+    sdCardPesent = false;
+    return false;
+  }
+
+  sdCardPesent = true;
+
+  int measurementFileIndex = 1;
+  char filename[20] = "/measurment.csv";
+
+  while (SD.exists(filename)) {
+    measurementFileIndex++;
+    sprintf(filename, "/measurment_%d.csv", measurementFileIndex);
+  }
+
+  writeFile(SD, filename, "");
+  appendFile(SD, filename, "celPotential;measuredCurrent;temperature\n");
+
+  char dataString[200];
+  for (int i = 1; i < dataSize; i++) {
+    sprintf(dataString, "%d;%f;%f\n", data[i].celPotential, data[i].measuredCurrent, data[i].temperature);
+    for (int j = 0; j < strlen(dataString); j++) {
+      if (dataString[j] == '.') {
+        dataString[j] = ',';
+      }
+    }
+    appendFile(SD, filename, dataString);
+  }
+  SD.end(); 
+  return true;
+}
+  
