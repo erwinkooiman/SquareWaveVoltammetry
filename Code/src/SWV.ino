@@ -313,6 +313,7 @@ void loop(void)
 
   if (rampPot >= endPot && !measurmentDone)// Check if the end potential is reached
   { 
+    setDacValue(DACOFFSET);
     writeDataToSD(data, measurementIndex);                  // write the data to the sd card
     measurementIndex = 0;             // reset the index
     memset(data, '\0', sizeof(data)); // reset the array
